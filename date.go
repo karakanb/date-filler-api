@@ -68,7 +68,7 @@ func (t Date) MarshalJSON() ([]byte, error) {
 func calculateRange(start time.Time, end time.Time) []Date {
 	var result []Date
 
-	for d := start; d != end; d = d.AddDate(0, 0, 1) {
+	for d := start; !d.After(end); d = d.AddDate(0, 0, 1) {
 		result = append(result, NewDate(d))
 	}
 

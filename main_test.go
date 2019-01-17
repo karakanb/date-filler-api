@@ -11,7 +11,7 @@ func TestCalculateRange(t *testing.T) {
 		endDate          string
 		expectedDayCount int
 	}{
-		{"2013-12-30", "2014-01-10", 11},
+		{"2013-12-30", "2014-01-10", 12},
 	}
 
 	for _, table := range tables {
