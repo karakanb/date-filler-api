@@ -555,9 +555,7 @@ func TestSundayWeek(t *testing.T) {
 
 		t.Run(table.date, func(t *testing.T) {
 			timeInstance, _ := time.Parse(dateFormat, table.date)
-
-			newDate := Date{timeInstance}
-			calculatedWeek := newDate.sundayWeek()
+			calculatedWeek := sundayWeek(timeInstance)
 			if calculatedWeek != table.expectedWeek {
 				t.Errorf("sundayWeek was incorrect, got: %d, want: %d.", calculatedWeek, table.expectedWeek)
 			}

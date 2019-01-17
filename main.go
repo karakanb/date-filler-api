@@ -7,44 +7,27 @@ import (
 	"time"
 )
 
-func calculateRange(start time.Time, end time.Time) []Date {
-	var result []Date
+func calculateUniqueRange(start time.Time, end time.Time, uniqueKey string) []Date {
+	dates := calculateRange(start, end)
 
-	for d := start; d != end; d = d.AddDate(0, 0, 1) {
-		result = append(result, Date{d})
+	if uniqueKey != "" {
+		dates = uniqueDatesByKey(dates, uniqueKey)
 	}
 
-	return result
+	return dates
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	startDateString := r.URL.Query().Get("startDate")
-	startDate, err := time.Parse(dateFormat, startDateString)
+	startDate, endDate, unique, err := validate(r)
 	if err != nil {
 		jsonError(w, "You need to send a valid startDate.", 400)
 		return
 	}
 
-	endDateString := r.URL.Query().Get("endDate")
-	endDate, err := time.Parse(dateFormat, endDateString)
-	if err != nil {
-		jsonError(w, "You need to send a valid endDate.", 400)
-		return
-	}
-
-	if !endDate.After(startDate) {
-		jsonError(w, "endDateString has to be after startDateString", 400)
-		return
-	}
-
-	result := calculateRange(startDate, endDate)
-
-	resulArray, err := json.Marshal(result)
-	if err != nil {
-		http.Error(w, "JSON Error", 500)
-	}
+	result := calculateUniqueRange(startDate, endDate, unique)
+	resultJson, _ := json.Marshal(result)
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(resulArray)
+	w.Write(resultJson)
 }
 
 func main() {
