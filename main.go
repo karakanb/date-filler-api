@@ -24,7 +24,7 @@ func calculateUniqueRange(start time.Time, end time.Time, uniqueKey string) []Da
 func handler(w http.ResponseWriter, r *http.Request) {
 	startDate, endDate, unique, err := validate(r)
 	if err != nil {
-		jsonError(w, "You need to send a valid startDate.", 400)
+		jsonError(w, err.Error(), 400)
 		return
 	}
 
