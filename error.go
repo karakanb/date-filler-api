@@ -16,5 +16,6 @@ func (e Error) json() []byte {
 
 func jsonError(w http.ResponseWriter, message string, code int) {
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
 	w.Write(Error{message}.json())
 }
