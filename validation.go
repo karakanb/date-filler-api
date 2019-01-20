@@ -16,6 +16,7 @@ var uniqueKeys = map[string]bool{
 	"month":          true,
 	"week":           true,
 	"yearWeek":       true,
+	"yearMonth":       true,
 	"day":            true,
 	"isoYear":        true,
 	"isoWeek":        true,

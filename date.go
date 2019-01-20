@@ -19,6 +19,7 @@ type DateDefinition struct {
 	Month          int    `json:"month"`
 	Week           int    `json:"week"`
 	YearWeek       string `json:"yearWeek"`
+	YearMonth      string `json:"yearMonth"`
 	Day            int    `json:"day"`
 	IsoYear        int    `json:"isoYear"`
 	IsoWeek        int    `json:"isoWeek"`
@@ -36,6 +37,7 @@ func NewDate(t time.Time) Date {
 		Month:          int(t.Month()),
 		Week:           sundayWeek,
 		YearWeek:       fmt.Sprintf("%d%02d", t.Year(), sundayWeek),
+		YearMonth:       fmt.Sprintf("%d%02d", t.Year(), t.Month()),
 		IsoWeek:        isoWeek,
 		Day:            int(t.Day()),
 		IsoYear:        isoYear,
@@ -106,6 +108,9 @@ func (d DateDefinition) getUniqueValueByKey(key string) string {
 	case "yearWeek":
 		builder.WriteString(string(d.Year))
 		builder.WriteString(string(d.Week))
+	case "yearMonth":
+		builder.WriteString(string(d.Year))
+		builder.WriteString(string(d.Month))
 	case "day":
 		builder.WriteString(string(d.Year))
 		builder.WriteString(string(d.Month))
